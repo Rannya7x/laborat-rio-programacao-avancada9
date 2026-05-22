@@ -5,11 +5,12 @@
 
 void executar_split(FILE *arquivo_entrada, long long tam_max_bytes){
     int parte_atual = 1;
-    char nome_arquivo_saida[10];
-    sprintf(nome_arquivo_saida, "parte%d.mpg", parte_atual);
+    char nome_arquivo_saida[30];
+    sprintf(nome_arquivo_saida, "video_parte_%d.mpg", parte_atual);
 
     //abre arquivo de saída para escrita e aloca buffer
     FILE *arquivo_saida = fopen(nome_arquivo_saida, "wb");
+    printf("Criando arquivo %s ..\n", nome_arquivo_saida); 
     unsigned char *buffer = malloc(tam_max_bytes);
     long long tam_buffer = 0, tam_total_saida = 0;
     unsigned char prefixo[4];
@@ -24,6 +25,7 @@ void executar_split(FILE *arquivo_entrada, long long tam_max_bytes){
                 sprintf(nome_arquivo_saida, "video_parte_%d.mpg", ++parte_atual);
                 arquivo_saida = fopen(nome_arquivo_saida, "wb");
                 tam_total_saida = 0;
+                printf("Criando arquivo %s ..\n", nome_arquivo_saida); 
             }
 
             // Escreve o buffer atual no arquivo de saída
@@ -38,10 +40,9 @@ void executar_split(FILE *arquivo_entrada, long long tam_max_bytes){
             fseek(arquivo_entrada, -3, SEEK_CUR); // Volta 3 bytes para ler o próximo prefixo corretamente
         }
 
-        fwrite(buffer, 1, tam_buffer, arquivo_saida);
-        fclose(arquivo_saida);
-        free(buffer);
-
     }
+    fwrite(buffer, 1, tam_buffer, arquivo_saida);
+    fclose(arquivo_saida);
+    free(buffer);
 
 }
