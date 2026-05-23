@@ -6,7 +6,7 @@
 int main (int argc, char **argv) {
     //verifica se existem os argumentos necessários
     if (argc < 3){
-        printf("Uso: %s <arquivo.mpg> <tamanho_mb>\n", argv);
+        printf("Uso: %s <arquivo.mpg> <tamanho_mb>\n", *argv);
         return 1;
     }
 
